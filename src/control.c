@@ -109,6 +109,7 @@ Tbh
     Portal * portal;
     TbhEstimator estimator;
     float gain;
+    float slew;
     float lastAction;
     float lastError;
     float lastTarget;
@@ -117,12 +118,13 @@ Tbh
 Tbh;
 
 ControlHandle
-tbhInit(float gain, TbhEstimator estimator)
+tbhInit(float gain, float slew, TbhEstimator estimator)
 {
     Tbh * tbh = malloc(sizeof(Tbh));
     tbh->portal = NULL;
     tbh->estimator = estimator;
     tbh->gain = gain;
+    tbh->slew = slew;
     tbhReset(tbh);
     return tbh;
 }
@@ -145,7 +147,10 @@ float
 tbhUpdate(ControlHandle handle, ControlSystem * system)
 {
     Tbh * tbh = handle;
-    system->action -= system->error * system->dt * tbh->gain;
+    float actionDiff = -system->error * tbh->gain;
+    if (actionDiff > tbh->slew) actionDiff = tbh->slew;
+    else if (actionDiff < -tbh->slew) actionDiff = -tbh->slew;
+    system->action += actionDiff * system->dt;
 
     // TODO: this never equals, use range instead
     if (system->target != tbh->lastTarget)

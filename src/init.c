@@ -46,7 +46,7 @@ void initialize()
         .controlSetup = tbhSetup,
         .controlUpdater = tbhUpdate,
         .controlResetter = tbhReset,
-        .control = tbhInit(0.2, flywheelEstimator),
+        .control = tbhInit(0.2f, 10.0f, flywheelEstimator),
 
         .encoderGetter = encoderGetter,
         .encoderResetter = encoderResetter,

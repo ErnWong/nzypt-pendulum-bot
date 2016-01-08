@@ -49,7 +49,7 @@ void
 pidSetup(ControlHandle, Portal*);
 
 ControlHandle
-tbhInit(float gain, TbhEstimator);
+tbhInit(float gain, float slew, TbhEstimator);
 
 void
 tbhReset(ControlHandle);
