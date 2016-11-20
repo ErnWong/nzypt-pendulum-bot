@@ -31,7 +31,7 @@ void initialize()
     // Note: no joystick, no link, exit promptly
     // Purpose:
     //  - Init sensors, LCDs, Global vars, IMEs
-    flywheelEncoder = encoderInit(3, 4, false);
+    flywheelEncoder = encoderInit(3, 4, true);
 
     pigeon = pigeonInit(pigeonGets, pigeonPuts, millis);
 
@@ -54,13 +54,11 @@ void initialize()
 
         .motorSetters =
         {
-            motorSetter,
             motorSetter
         },
         .motors =
         {
-            motorGetHandle(4, false),
-            motorGetHandle(5, true)
+            motorGetHandle(1, false)
         },
 
         .priorityReady = 2,

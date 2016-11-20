@@ -152,7 +152,9 @@ tbhUpdate(ControlHandle handle, ControlSystem * system)
     else if (actionDiff < -tbh->slew) actionDiff = -tbh->slew;
     system->action += actionDiff * system->dt;
 
+    // Note: disbled tbh part leaving proportional part for simplicity
     // TODO: this never equals, use range instead
+    /*
     if (system->target != tbh->lastTarget)
     {
         tbh->crossed = false;
@@ -164,7 +166,8 @@ tbhUpdate(ControlHandle handle, ControlSystem * system)
     {
         if (!tbh->crossed)
         {
-            system->action = tbh->estimator(system->target);
+            // Special case: not really a flywheel for nzypt
+            // system->action = tbh->estimator(system->target);
             tbh->crossed = true;
             portalUpdate(tbh->portal, "crossed");
         }
@@ -177,6 +180,7 @@ tbhUpdate(ControlHandle handle, ControlSystem * system)
     }
     tbh->lastError = system->error;
     portalUpdate(tbh->portal, "last-error");
+    */
     return system->action;
 }
 
